@@ -24,6 +24,6 @@ public class Exercicio_3 {
     public static void main(String[] args) {
         
         File ficheiro = new File("C:/Users/David Casalderrey/Documents/awdad.txt");
-        contar(ficheiro, 'I');
+        contar(ficheiro, ' ');
     }
 }

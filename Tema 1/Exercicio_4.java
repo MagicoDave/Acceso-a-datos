@@ -18,7 +18,18 @@ public class Exercicio_4 {
                     Caracter c = new Caracter((char) caracterLeido, 1);
                     listaCaracteres.add(c);
                 } else {
-                    for (Caracter c : listaCaracteres){
+
+// listaCaracteres.set()
+
+
+char ach=(char) caracterLeido;
+Caracter aCaracter=new Caracter((char) caracterLeido, 0);
+int pos=listaCaracteres.indexOf(aCaracter);
+aCaracter=listaCaracteres.get(pos);
+aCaracter.num++;
+                
+
+                for (Caracter c : listaCaracteres){
                         if (c.letra == (char) caracterLeido){
                             c.num++;
                         }
@@ -31,6 +42,10 @@ public class Exercicio_4 {
             // TODO: handle exception
         }
 
+
+
+
+
         for (Caracter c : listaCaracteres){
             if (c.num>caracterMaisUsado.num){
                 caracterMaisUsado.letra = c.letra;
@@ -38,7 +53,11 @@ public class Exercicio_4 {
             }
         }
 
+        for (Caracter c : listaCaracteres){
+            if (c.num==caracterMaisUsado.num){
         System.out.println("O caracter mais usado é " + caracterMaisUsado.letra + ", total: " + caracterMaisUsado.num);
+            }
+        }
 
     }
 
@@ -54,6 +73,12 @@ public class Exercicio_4 {
         public Caracter (){
             this.letra = 0;
             this.num = 0;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            // TODO Auto-generated method stub
+            return ((Caracter)obj).letra==this.letra;
         }
     }
 

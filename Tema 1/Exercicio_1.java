@@ -10,4 +10,12 @@ public class Exercicio_1 {
             }
         }
     }
+
+    public static void main(String[] args) {
+        
+        String documents = System.getProperty("user.home") + "/Documents/";
+        File aux = new File(documents);
+
+        info(aux);
+    }
 }

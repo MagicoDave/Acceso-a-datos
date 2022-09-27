@@ -15,12 +15,12 @@ public class Exercicio_6 {
             while (sc.hasNextLine()){
 
                 String salida = ficheiroSalida + "divisionLineas" + cont + ".txt";
-                try (PrintWriter fw = new PrintWriter(new FileWriter(salida, true))) {
-                    for (int i = 0; i < numLineas; i++) {
+                try (PrintWriter fw = new PrintWriter(new FileWriter(salida, false))) {
+                    for (int i = 0; i < numLineas && sc.hasNextLine(); i++) {
                         fw.write(sc.nextLine() + "\n");
                     }
                 } catch (Exception e) {
-                    // TODO: handle exception
+                    e.printStackTrace();
                 }
                 cont++;
             }
@@ -76,14 +76,14 @@ public class Exercicio_6 {
         
         String documents = System.getProperty("user.home") + "/Documents/";
         File ficheiro = new File("C:/Users/David Casalderrey/Documents/awdad.txt");
-        //dividirLineas(ficheiro, documents, 4);
+        dividirLineas(ficheiro, documents, 4);
         //dividirCaracteres(ficheiro, documents, 10);
 
-        File test1 = new File("C:/Users/David Casalderrey/Documents/test1.txt");
-        File test2 = new File("C:/Users/David Casalderrey/Documents/test2.txt");
-        File test3 = new File("C:/Users/David Casalderrey/Documents/test3.txt");
-        File test4 = new File("C:/Users/David Casalderrey/Documents/test4.txt");
-        unir(documents + "testsunidos.txt", test1, test2, test3, test4);
+        // File test1 = new File("C:/Users/David Casalderrey/Documents/test1.txt");
+        // File test2 = new File("C:/Users/David Casalderrey/Documents/test2.txt");
+        // File test3 = new File("C:/Users/David Casalderrey/Documents/test3.txt");
+        // File test4 = new File("C:/Users/David Casalderrey/Documents/test4.txt");
+        // unir(documents + "testsunidos.txt", test1, test2, test3, test4);
 
     }
 }
