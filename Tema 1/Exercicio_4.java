@@ -22,7 +22,7 @@ public class Exercicio_4 {
 // listaCaracteres.set()
 
 
-char ach=(char) caracterLeido;
+//char ach=(char) caracterLeido;
 Caracter aCaracter=new Caracter((char) caracterLeido, 0);
 int pos=listaCaracteres.indexOf(aCaracter);
 aCaracter=listaCaracteres.get(pos);

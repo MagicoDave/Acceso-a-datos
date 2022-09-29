@@ -1,12 +1,13 @@
+package Exercicio_10;
 import java.text.DecimalFormat;
 
-public class Alumno {
+public class Persoa {
     
     //TODO Puedo reutilizar esta clase para hacer Persona en el ejercicio 10
 
     private int codigo;
     private String nome;
-    private double altura;
+    private double salario;
 
     public void setCodigo (int codigo){
         this.codigo = codigo;
@@ -24,16 +25,15 @@ public class Alumno {
         return nome;
     }
 
-    public void setAltura (double altura){
-        DecimalFormat df = new DecimalFormat("#.##");
-        this.altura = Double.valueOf(df.format(altura));
+    public void setAltura (double salario){
+        this.salario = salario;
     }
 
     public double getAltura (){
-        return altura;
+        return salario;
     }
 
-    public Alumno (int codigo, String nome, double altura){
+    public Persoa (int codigo, String nome, double altura){
         setCodigo(codigo);
         setAltura(altura);
         setNome(nome);
