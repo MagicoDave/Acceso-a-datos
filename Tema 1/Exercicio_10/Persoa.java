@@ -1,7 +1,7 @@
 package Exercicio_10;
-import java.text.DecimalFormat;
+import java.io.Serializable;
 
-public class Persoa {
+public class Persoa implements Serializable{
     
     //TODO Puedo reutilizar esta clase para hacer Persona en el ejercicio 10
 

@@ -25,7 +25,7 @@ public class Exercicio_6 {
                 cont++;
             }
         } catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace();
         }
     }
 
@@ -49,13 +49,13 @@ public class Exercicio_6 {
                         cont++;
                     }
                 } catch (Exception e) {
-                    // TODO: handle exception
+                    e.printStackTrace();
                 }
                 
             }
 
         } catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace();
         }
     }
 
@@ -67,7 +67,7 @@ public class Exercicio_6 {
                         pw.write(sc.nextLine());
                     }
                 } catch (Exception e) {
-                    // TODO: handle exception
+                    e.printStackTrace();
                 }
             }
     }

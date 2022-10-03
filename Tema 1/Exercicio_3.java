@@ -17,7 +17,7 @@ public class Exercicio_3 {
             }
             System.out.printf("\nNúmero de repeticiones del carácter '%c': %d", caracter, c);
         } catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace();
         }
     }
 

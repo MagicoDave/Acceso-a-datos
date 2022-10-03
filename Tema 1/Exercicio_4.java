@@ -39,7 +39,7 @@ aCaracter.num++;
 
 
         } catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace();
         }
 
 
@@ -77,7 +77,6 @@ aCaracter.num++;
 
         @Override
         public boolean equals(Object obj) {
-            // TODO Auto-generated method stub
             return ((Caracter)obj).letra==this.letra;
         }
     }

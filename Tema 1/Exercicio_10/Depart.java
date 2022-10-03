@@ -1,5 +1,8 @@
 package Exercicio_10;
-public class Depart {
+
+import java.io.Serializable;
+
+public class Depart implements Serializable{
 
     private String nome;
     private int codigo;
@@ -29,7 +32,7 @@ public class Depart {
         return empleados;
     }
 
-    public Depart(String nome, int codigo, Persoa[] empleados){
+    public Depart(int codigo, String nome, Persoa[] empleados){
         setNome(nome);
         setCodigo(codigo);
         setEmpleados(empleados);
