@@ -72,8 +72,8 @@ public class Main {
         // Ejer2.mostrarTitulos(doc);
         // getDatos(doc);
         // Ejer3.mostrarTituloAutorXenero(doc);
-        //Ejer4.percorrerArbore(doc);
-        Ejer5.filtrarPorNumDirectores(doc, 2);
+        // Ejer4.percorrerArbore(doc);
+        Ejer5.filtrarPorNumDirectores(doc, 1);
         
 
     }
