@@ -8,13 +8,13 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.SAXException;
 
-public class MainSAX extends ParserSAX{
+public class MainSAX extends LerTitulos{
 
 
     public static void getSax (String entradaXML) throws ParserConfigurationException, SAXException, IOException {
         SAXParserFactory factory = SAXParserFactory.newInstance();
         SAXParser parser = factory.newSAXParser();
-        ParserSAX parserSax = new ParserSAX();
+        VerArbore parserSax = new VerArbore();
         parser.parse(entradaXML, parserSax);
     }
 

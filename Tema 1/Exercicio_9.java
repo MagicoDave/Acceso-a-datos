@@ -69,11 +69,15 @@ public class Exercicio_9 {
                 dout.writeUTF(nomes.get(i));
                 dout.writeDouble(alturas.get(i));
             }
+
+            dout.writeInt(codigoNovo);
+                dout.writeUTF(nomeNovo);
+                dout.writeDouble(alturaNova);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        altaAlumno(codigoNovo, nomeNovo, alturaNova);
+       // altaAlumno(codigoNovo, nomeNovo, alturaNova);
     }
 
     static void borrarAlumno(int codigo){
