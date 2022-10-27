@@ -165,8 +165,8 @@ public class Exercicio_10 {
 
         // altaDepart(0, "Recursos humanos", empleados);
 
-        borrarPersoa(2);
-        borrarDepart(0);
+        //borrarPersoa(2);
+        //borrarDepart(0);
 
         mostrarPersoa(0);
         mostrarPersoa(1);

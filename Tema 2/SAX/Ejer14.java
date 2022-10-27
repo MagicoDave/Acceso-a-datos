@@ -5,7 +5,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class VerArbore extends DefaultHandler {
+public class Ejer14 extends DefaultHandler {
 
     String nome = "";
     String cad = "";

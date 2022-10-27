@@ -4,7 +4,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class LerTitulos extends DefaultHandler{
+public class Ejer13 extends DefaultHandler{
     
     boolean esTitulo = false;
 

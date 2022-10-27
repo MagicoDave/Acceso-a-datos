@@ -1,3 +1,4 @@
+package DOM;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

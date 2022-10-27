@@ -1,3 +1,4 @@
+package DOM;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
