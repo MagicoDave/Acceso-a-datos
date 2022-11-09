@@ -29,14 +29,14 @@ public class Libreria {
 
     //Exercicio 2
     public static JsonObject verPrediccionCoordinadas(double lon, double lat) {
-        String ruta = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon="+ lon +"&lang=es&APPID=8f8dccaf02657071004202f05c1fdce0&units=metric";
+        String ruta = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon="+ lon +"&APPID=8f8dccaf02657071004202f05c1fdce0&units=metric";
         System.out.println(ruta);
         return Jsonn.leeJSON(ruta).asJsonObject();
     }
 
     //Exercicio 3
     public static JsonObject verPrediccionNLocalidadesCercanas(int n, double lon, double lat) {
-        String ruta = "http://api.openweathermap.org/data/2.5/find?lat=" + lat + "&lon=" + lon + "&cnt=" + n + "&lang=es&APPID=a975f935caf274ab016f4308ffa23453&units=metric";
+        String ruta = "http://api.openweathermap.org/data/2.5/find?lat=" + lat + "&lon=" + lon + "&cnt=" + n + "&APPID=a975f935caf274ab016f4308ffa23453&units=metric";
         System.out.println(ruta);
         return Jsonn.leeJSON(ruta).asJsonObject();
     }
@@ -56,7 +56,6 @@ public class Libreria {
         return new Coordinadas(obj.getJsonObject("coord").getJsonNumber("lon").doubleValue(), 
         obj.getJsonObject("coord").getJsonNumber("lat").doubleValue()
         );
-
     }
 
     //Exercicio 7
@@ -85,7 +84,42 @@ public class Libreria {
     }
 
     //Exercicio 8
-    public static String getPredicciones(JsonObject obj){
-        return null;
+    public static String getPrediccionesCercanasA(String localidade, int numero){
+
+        //Sacar as coordenadas da localidade especificada
+        JsonObject joLocalidade = verPrediccionLocalidade(localidade);
+        double lon = joLocalidade.getJsonObject("coord").getJsonNumber("lon").doubleValue();
+        double lat = joLocalidade.getJsonObject("coord").getJsonNumber("lat").doubleValue();
+
+        //Crear un JsonObject con todas as localizacións a partir dos datos anteriores
+        JsonObject aux = verPrediccionNLocalidadesCercanas(numero, lon, lat);
+
+        //Por cada localidade, sacar os datos
+        String pronosticos = "";
+        JsonArray array = aux.getJsonArray("list");
+        for (int i = 0; i < array.size(); i++) {
+            pronosticos += "\n" + array.getJsonObject(i).getString("name") + "\n";
+            pronosticos += getPrediccion(array.getJsonObject(i));
+        }
+
+        return pronosticos;
+    }
+
+    //Exercicio 9
+    public static String getTriviaInformatica(int cantidad){
+        String ruta = "https://opentdb.com/api.php?amount=" + cantidad + "&category=18&difficulty=hard";
+        JsonObject aux = Jsonn.leeJSON(ruta).asJsonObject();
+        JsonArray array = aux.getJsonArray("results");
+        String resultados = "";
+        for (int i = 0; i < array.size(); i++) {
+            resultados += "\n\nPregunta numero " + i;
+            resultados += "\n" + array.getJsonObject(i).getString("question");
+            resultados += "\n* " + array.getJsonObject(i).getString("correct_answer");
+            JsonArray subarray = array.getJsonObject(i).getJsonArray("incorrect_answers");
+            for (int j = 0; j < subarray.size(); j++) {
+                resultados += "\n" + subarray.getString(j);
+            }
+        }
+        return resultados;
     }
 }
