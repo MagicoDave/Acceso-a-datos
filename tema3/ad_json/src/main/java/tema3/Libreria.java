@@ -122,4 +122,39 @@ public class Libreria {
         }
         return resultados;
     }
+
+    //Exercicio 10
+    public static String getTipoEventosPais (String classificationName, String countryCode){
+        String ruta = "https://app.ticketmaster.com/discovery/v2/events.json?classificationName="+ classificationName +"&countryCode=" + countryCode + "&apikey=AMXR5Rf8zlr7oGucsebGKvDCLOQmGUGE";
+        System.err.println(ruta);
+        String eventos = "";
+
+        JsonObject ob = Jsonn.leeJSON(ruta).asJsonObject();
+        JsonArray array = ob.getJsonObject("_embedded").getJsonArray("events");
+
+        for (int i = 0; i < array.size(); i++) {
+            eventos += "\n" + i + ". " + array.getJsonObject(i).getString("name");
+        }
+
+        return eventos;
+    }
+
+    //Exercicio 11
+    public static String getInfoEventoLocalizacion (JsonObject obj){
+        String info = "";
+        JsonArray venues = obj.getJsonObject("_embedded").getJsonArray("venues");
+
+        for (int i = 0; i < venues.size(); i++) {
+            info += "\n\nNome do lugar: " + venues.getJsonObject(i).getString("name");
+            info += "\nCidade: " + venues.getJsonObject(i).getJsonObject("city").getString("name");
+            info += "\nPaís: " + venues.getJsonObject(i).getJsonObject("country").getString("name");
+            info += "\nRúa: " + venues.getJsonObject(i).getJsonObject("adress").getString("name");
+        }
+        return info;
+    }
+
+    public static String getInfoEventoDetallada (JsonObject obj){
+        String info = "";
+        return info;
+    }
 }

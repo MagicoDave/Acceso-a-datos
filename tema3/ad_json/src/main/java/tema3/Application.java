@@ -13,6 +13,7 @@ public class Application {
     // JsonObject prueba = Libreria.verPrediccionLocalidade("vigo");
     // JsonObject prueba = Libreria.verPrediccionNLocalidadesCercanas(4, -8.7226, 42.2328);
     //JsonObject prueba = Libreria.verPrediccionCoordinadas(41.9561, -7.974);
+    JsonObject prueba = Jsonn.leeJSON("https://app.ticketmaster.com/discovery/v2/events/Z698xZG2ZaGt4.json?apikey=AMXR5Rf8zlr7oGucsebGKvDCLOQmGUGE").asJsonObject();
 
     // System.out.println(Libreria.getNome(prueba));
     // System.out.println(Libreria.getId(prueba));
@@ -23,7 +24,11 @@ public class Application {
     // System.out.println(Libreria.getPrediccion(prueba));
 
     // System.out.println(Libreria.getPrediccionesCercanasA("vigo", 4));
-    System.out.println(Libreria.getTriviaInformatica(20));
+    
+    // System.out.println(Libreria.getTriviaInformatica(20));
+    
+    // System.out.println(Libreria.getTipoEventosPais("music", "ES"));
+    System.out.println(Libreria.getInfoEventoLocalizacion(prueba));
 
-  }
+  }   
 }
