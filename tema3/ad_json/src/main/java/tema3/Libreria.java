@@ -23,7 +23,7 @@ public class Libreria {
     //Exercicio 1
     public static JsonObject verPrediccionLocalidade(String localidade) {      
         String ruta = "http://api.openweathermap.org/data/2.5/weather?q=" + localidade + "&lang=es&APPID=a975f935caf274ab016f4308ffa23453&units=metric";
-        System.out.println(ruta);
+        //System.out.println(ruta);
         return Jsonn.leeJSON(ruta).asJsonObject();
     }
 
@@ -145,16 +145,81 @@ public class Libreria {
         JsonArray venues = obj.getJsonObject("_embedded").getJsonArray("venues");
 
         for (int i = 0; i < venues.size(); i++) {
-            info += "\n\nNome do lugar: " + venues.getJsonObject(i).getString("name");
+            info += "\nNome do lugar: " + venues.getJsonObject(i).getString("name");
             info += "\nCidade: " + venues.getJsonObject(i).getJsonObject("city").getString("name");
             info += "\nPaís: " + venues.getJsonObject(i).getJsonObject("country").getString("name");
-            info += "\nRúa: " + venues.getJsonObject(i).getJsonObject("adress").getString("name");
+            info += "\nRúa: " + venues.getJsonObject(i).getJsonObject("address").getString("line1");
         }
         return info;
     }
 
     public static String getInfoEventoDetallada (JsonObject obj){
-        String info = "";
+        String info = "\nNome do evento: " + obj.getString("name");
+        info += "\nData do evento: " + obj.getJsonObject("dates").getJsonObject("start").getString("localDate");
+        
+        JsonArray clasificaciones = obj.getJsonArray("classifications");
+        for (int i = 0; i < clasificaciones.size(); i++) {
+            info += "\nTipo do evento: " + clasificaciones.getJsonObject(i).getJsonObject("segment").getString("name");
+            info += "\nXénero: " + clasificaciones.getJsonObject(i).getJsonObject("genre").getString("name");
+        }
         return info;
+    }
+
+    public static String getTipoEventosPais (String classificationName, String countryCode, boolean localizacion, boolean info){
+        String ruta = "https://app.ticketmaster.com/discovery/v2/events.json?classificationName="+ classificationName +"&countryCode=" + countryCode + "&apikey=AMXR5Rf8zlr7oGucsebGKvDCLOQmGUGE";
+        System.err.println(ruta);
+        String eventos = "";
+
+        JsonObject ob = Jsonn.leeJSON(ruta).asJsonObject();
+        JsonArray array = ob.getJsonObject("_embedded").getJsonArray("events");
+
+        for (int i = 0; i < array.size(); i++) {
+            String id = array.getJsonObject(i).getString("id");
+            String rutaEvento = "https://app.ticketmaster.com/discovery/v2/events/" + id + ".json?apikey=AMXR5Rf8zlr7oGucsebGKvDCLOQmGUGE";
+            JsonObject objetoEvento = Jsonn.leeJSON(rutaEvento).asJsonObject();
+            eventos += "\n***************";
+            eventos += "\n" + i + ". " + array.getJsonObject(i).getString("name");
+            if (info){
+                eventos += getInfoEventoDetallada(objetoEvento);
+            }
+            if (localizacion){
+                eventos += getInfoEventoLocalizacion(objetoEvento);
+            }
+            eventos += "\n***************\n";
+        }
+
+        return eventos;
+    }
+
+    //Exercicio 12
+    public static String getTipoEventosPais (String classificationName, String countryCode, boolean localizacion, boolean info, boolean tiempo){
+        String ruta = "https://app.ticketmaster.com/discovery/v2/events.json?classificationName="+ classificationName +"&countryCode=" + countryCode + "&apikey=AMXR5Rf8zlr7oGucsebGKvDCLOQmGUGE";
+        System.err.println(ruta);
+        String eventos = "";
+
+        JsonObject ob = Jsonn.leeJSON(ruta).asJsonObject();
+        JsonArray array = ob.getJsonObject("_embedded").getJsonArray("events");
+
+        for (int i = 0; i < array.size(); i++) {
+            String id = array.getJsonObject(i).getString("id");
+            String rutaEvento = "https://app.ticketmaster.com/discovery/v2/events/" + id + ".json?apikey=AMXR5Rf8zlr7oGucsebGKvDCLOQmGUGE";
+            JsonObject objetoEvento = Jsonn.leeJSON(rutaEvento).asJsonObject();
+            String localidade = objetoEvento.getJsonObject("_embedded").getJsonArray("venues").getJsonObject(0).getJsonObject("city").getString("name");
+            eventos += "\n***************";
+            eventos += "\n" + i + ". " + array.getJsonObject(i).getString("name");
+            if (info){
+                eventos += getInfoEventoDetallada(objetoEvento);
+            }
+            if (localizacion){
+                eventos += getInfoEventoLocalizacion(objetoEvento);
+            }
+            if (tiempo){
+                JsonObject prediccion = verPrediccionLocalidade(localidade);
+                eventos += getPrediccion(prediccion);
+            }
+            eventos += "\n***************\n";
+        }
+
+        return eventos;
     }
 }
