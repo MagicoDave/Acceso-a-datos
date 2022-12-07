@@ -69,7 +69,7 @@ public class Libreria {
         }
 
         return 
-            "Data: " + unixTimeToString(obj.getJsonNumber("dt").longValue()) + 
+            "\nData: " + unixTimeToString(obj.getJsonNumber("dt").longValue()) + 
             "\nTemperatura: " +  obj.getJsonObject("main").getJsonNumber("temp") + "º" +
             "\nHumidade: " + obj.getJsonObject("main").getJsonNumber("humidity") + "%" + 
             "\nProbabilidade de ceo con nubes: " + obj.getJsonObject("clouds").getJsonNumber("all").doubleValue() + "%" +
@@ -206,7 +206,7 @@ public class Libreria {
             JsonObject objetoEvento = Jsonn.leeJSON(rutaEvento).asJsonObject();
             String localidade = objetoEvento.getJsonObject("_embedded").getJsonArray("venues").getJsonObject(0).getJsonObject("city").getString("name");
             eventos += "\n***************";
-            eventos += "\n" + i + ". " + array.getJsonObject(i).getString("name");
+            eventos += "\n" + (i+1) + ". " + array.getJsonObject(i).getString("name");
             if (info){
                 eventos += getInfoEventoDetallada(objetoEvento);
             }
