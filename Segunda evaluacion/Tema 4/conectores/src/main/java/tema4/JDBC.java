@@ -62,7 +62,10 @@ public class JDBC {
         abrirConexion("add", "localhost", "root", "");
 
         try (Statement st = this.conexion.createStatement()){
+            String query = "INSERT INTO alumnos (nombre, apellidos, altura, aula) VALUES ('" + nombre + "','" + apellidos + "'," + altura +"," + aula + ")";
             
+            int filasAfectadas = st.executeUpdate(query);
+            System.out.println("Filas insertadas: " + filasAfectadas);
         } catch (SQLException e) {
             System.out.println("Se ha producido un error: " + e.getLocalizedMessage());
         } finally {
@@ -74,7 +77,10 @@ public class JDBC {
         abrirConexion("add", "localhost", "root", "");
 
         try (Statement st = this.conexion.createStatement()){
+            String query = "INSERT INTO asignaturas VALUES (" + cod + ",'" + nombre + "')";
             
+            int filasAfectadas = st.executeUpdate(query);
+            System.out.println("Filas insertadas: " + filasAfectadas);
         } catch (SQLException e) {
             System.out.println("Se ha producido un error: " + e.getLocalizedMessage());
         } finally {
@@ -87,7 +93,10 @@ public class JDBC {
         abrirConexion("add", "localhost", "root", "");
 
         try (Statement st = this.conexion.createStatement()){
+            String query = "DELETE FROM alumnos WHERE codigo="+codigo;
             
+            int filasAfectadas = st.executeUpdate(query);
+            System.out.println("Filas insertadas: " + filasAfectadas);
         } catch (SQLException e) {
             System.out.println("Se ha producido un error: " + e.getLocalizedMessage());
         } finally {
@@ -99,9 +108,65 @@ public class JDBC {
         abrirConexion("add", "localhost", "root", "");
 
         try (Statement st = this.conexion.createStatement()){
+            String query = "DELETE FROM asignaturas WHERE COD="+cod;
             
+            int filasAfectadas = st.executeUpdate(query);
+            System.out.println("Filas insertadas: " + filasAfectadas);
         } catch (SQLException e) {
             System.out.println("Se ha producido un error: " + e.getLocalizedMessage());
+        } finally {
+            cerrarConexion();
+        }
+    }
+
+    //Ejercicio 4
+    public void modificarAlumno (int codigo, String nombre, String apellidos, int altura, int aula){
+        abrirConexion("add", "localhost", "root", "");
+
+        try (Statement st = this.conexion.createStatement()) {
+            String query = "UPDATE alumnos SET nombre='"+nombre+"', apellidos='"+apellidos+"', altura="+altura+", aula="+aula+" WHERE codigo="+codigo;
+            
+            int filasAfectadas = st.executeUpdate(query);
+            System.out.println("Filas insertadas: " + filasAfectadas);
+        } catch (Exception e) {
+            System.out.println("Se ha producido un error: " + e.getLocalizedMessage());
+        } finally {
+            cerrarConexion();
+        }
+    }
+
+    public void modificarAsignatura (int cod, String nombre){
+        abrirConexion("add", "localhost", "root", "");
+
+        try (Statement st = this.conexion.createStatement()) {
+            String query = "UPDATE asignaturas SET nombre='"+nombre+"' WHERE COD="+cod;
+
+            int filasAfectadas = st.executeUpdate(query);
+            System.out.println("Filas insertadas: " + filasAfectadas);
+        } catch (Exception e) {
+            System.out.println("Se ha producido un error: " + e.getLocalizedMessage());
+        } finally {
+            cerrarConexion();
+        }
+    }
+
+    //Ejercicio 5
+    public void aulasPobladas(){
+        abrirConexion("add", "localhost", "root", "");
+
+        try (Statement st = this.conexion.createStatement()){
+            String query = "SELECT DISTINCT nombreAula FROM aulas LEFT JOIN alumnos ON aulas.numero = alumnos.aula";
+            ResultSet rs = st.executeQuery(query);
+
+            int contador = 0;
+            while (rs.next()){
+                System.out.println(rs.getString("nombreAula"));
+                contador++;
+            }
+            System.out.println("Tu búsqueda ha devuelto " + contador + " resultado(s)");
+        } catch (SQLException e) {
+            System.out.println("Se ha producido un error: " + e.getLocalizedMessage());
+            e.getStackTrace();
         } finally {
             cerrarConexion();
         }
