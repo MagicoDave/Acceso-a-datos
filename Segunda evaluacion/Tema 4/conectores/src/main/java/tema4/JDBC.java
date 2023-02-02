@@ -2,6 +2,7 @@ package tema4;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -9,13 +10,14 @@ import java.sql.Statement;
 public class JDBC {
     
     private Connection conexion;
+    private PreparedStatement ps=null;
 
     public void abrirConexion(String bd, String servidor, String usuario,
             String password) {
         try {
             String url = String.format("jdbc:mariadb://%s:3306/%s", servidor, bd);
             // Establecemos la conexión con la BD
-            this.conexion = DriverManager.getConnection(url, usuario, password);
+            this.conexion = DriverManager.getConnection(url + "?useServerPrepStmts=true", usuario, password);
             if (this.conexion != null) {
                 System.out.println("Conectado a " + bd + " en " + servidor);
             } else {
@@ -170,5 +172,93 @@ public class JDBC {
         } finally {
             cerrarConexion();
         }
+    }
+
+    public void alumnosConAprovado(){
+        abrirConexion("add", "localhost", "root", "");
+
+        try (Statement st = this.conexion.createStatement()){
+            String query = "SELECT alumnos.nombre, asignaturas.NOMBRE, notas.NOTA FROM notas LEFT JOIN alumnos ON notas.alumno = alumnos.codigo LEFT JOIN asignaturas ON notas.asignatura = asignaturas.COD WHERE notas.nota >= 5";
+            ResultSet rs = st.executeQuery(query);
+
+            int contador = 0;
+            while (rs.next()){
+                System.out.println(rs.getString("alumnos.nombre") + " " + rs.getString("asignaturas.NOMBRE") + ": " + rs.getInt("notas.nota"));
+                contador++;
+            }
+            System.out.println("Tu búsqueda ha devuelto " + contador + " resultado(s)");
+        } catch (SQLException e) {
+            System.out.println("Se ha producido un error: " + e.getLocalizedMessage());
+            e.getStackTrace();
+        } finally {
+            cerrarConexion();
+        }
+    }
+
+    public void asignaturasSinAlumnos(){
+        abrirConexion("add", "localhost", "root", "");
+
+        try (Statement st = this.conexion.createStatement()){
+            String query = "SELECT DISTINCT asignaturas.NOMBRE FROM asignaturas EXCEPT SELECT DISTINCT asignaturas.NOMBRE FROM asignaturas LEFT JOIN notas ON asignaturas.COD = notas.asignatura WHERE notas.asignatura IS NOT NULL";
+            ResultSet rs = st.executeQuery(query);
+
+            int contador = 0;
+            while (rs.next()){
+                System.out.println(rs.getString("NOMBRE"));
+                contador++;
+            }
+            System.out.println("Tu búsqueda ha devuelto " + contador + " resultado(s)");
+        } catch (SQLException e) {
+            System.out.println("Se ha producido un error: " + e.getLocalizedMessage());
+            e.getStackTrace();
+        } finally {
+            cerrarConexion();
+        }
+    }
+
+    //Ejercicio 6
+    public boolean patronNombreAlturaAlumno(int codigoAlumno, String patron, int altura){
+        abrirConexion("add", "localhost", "root", "");
+
+        try (Statement st = this.conexion.createStatement()){
+            String query = "SELECT codigo FROM alumnos WHERE nombre LIKE \"" + patron + "\" AND codigo = " + codigoAlumno + " AND altura > " + altura;
+            ResultSet rs = st.executeQuery(query);
+
+            if (rs.next()){
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Se ha producido un error: " + e.getLocalizedMessage());
+            e.getStackTrace();
+        } finally {
+            cerrarConexion();
+        }
+
+        return false;
+    }
+
+    public boolean patronNombreAlturaAlumnoPS(int codigoAlumno, String patron, int altura){
+        abrirConexion("add", "localhost", "root", "");
+
+        try (Statement st = this.conexion.createStatement()){
+            String query = "SELECT codigo FROM alumnos WHERE nombre LIKE ? AND codigo = ? AND altura > ?";
+            if (this.ps == null){
+                this.ps = this.conexion.prepareStatement(query);
+            }
+            ps.setString(1, patron);
+            ps.setInt(2, codigoAlumno);
+            ps.setInt(3, altura);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()){
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Se ha producido un error: " + e.getLocalizedMessage());
+            e.getStackTrace();
+        } finally {
+            cerrarConexion();
+        }
+        return false;
     }
 }
