@@ -13,13 +13,13 @@ public class GestionaPersona {
 	private static Persona persona;
 	
 	@GET
-	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_XML})
 	public Response leer() {
 		return Response.ok(persona).build();
 	}
 	
 	@POST
-	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Consumes({MediaType.APPLICATION_JSON, MediaType.TEXT_XML})
 	public void guardar(Persona persona) {
 		GestionaPersona.persona = persona;
 	}
