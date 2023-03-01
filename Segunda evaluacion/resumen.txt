@@ -1,0 +1,33 @@
+Conectores:
+Statement
+	executeUpdate -> int
+	executeQuery -> ResultSet
+PreparedStatement
+	if (this.ps == null){
+		this.ps == conexion.prepareStatement(query);
+	}
+	ps.setString(1, nombre);
+
+Metadata:
+DatabaseMetaData dbm = this.conexion.getMetaData();
+	Resultset tablas = dbmt.getTables(bd, null, null, null);
+	Resultset columnas=dbmt.getColumns(bd, null,
+		tablas.getString("TABLE_NAME"), null);
+ResultSet filas=st.executeQuery(consulta);
+	ResultSetMetaData rsmd=filas.getMetaData();
+
+Web:
+@Path
+@GET
+@POST
+@PUT
+@DELETE
+@HEAD
+@XmlRootElement
+@Produces (MediaType)
+@Consumes (MediaType) ("application/x-www-form-urlencoded")
+@PathParam
+@QueryParam
+@HeaderParam
+@FormParam
+Response
